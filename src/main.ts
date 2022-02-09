@@ -1,8 +1,14 @@
-import './style.css'
+import "normalize.css";
+import "./style.css";
 
-const app = document.querySelector<HTMLDivElement>('#app')!
+import { Scene } from "./classes/scene";
+import { Receiver } from "./classes/receiver";
+import { Polygon } from "./classes/polygon";
 
-app.innerHTML = `
-  <h1>Hello Vite!</h1>
-  <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
-`
+const app = document.querySelector<HTMLDivElement>("#app")!;
+const c = document.querySelector<HTMLCanvasElement>("#canvas")!;
+
+const ctx = c.getContext("2d")!;
+
+let width = c.width;
+let height = c.height;
