@@ -17,22 +17,22 @@ export class Receiver implements receiver {
     strokeWidth?: number
   ) {
     this.pos = { x, y };
-    this.radius = radius || 50;
+    this.radius = radius || 5;
 
     this.fillCol = fill || "#FFF";
     this.strokeCol = stroke || "#000";
-    this.strokeWidth = strokeWidth || 2;
+    this.strokeWidth = strokeWidth || 0.5;
   }
 
-  render(ctx: CanvasRenderingContext2D): void {
+  render(ctx: CanvasRenderingContext2D, unitRatio: number): void {
     ctx.beginPath();
-    ctx.arc(this.pos.x, this.pos.y, this.radius / 2, 0, 2 * Math.PI, false);
+    ctx.arc(0, 0, this.radius * unitRatio, 0, 2 * Math.PI, false);
 
     ctx.fillStyle = this.fillCol;
     ctx.fill();
 
     ctx.strokeStyle = this.strokeCol;
-    ctx.lineWidth = this.strokeWidth;
+    ctx.lineWidth = this.strokeWidth * unitRatio;
     ctx.stroke();
   }
 }

@@ -1,19 +1,21 @@
 import { emitter, receiver, scene } from "../types";
 
 export class Scene implements scene {
+  context: CanvasRenderingContext2D;
+
   receiver: receiver;
   emitters: Array<emitter>;
   polygons: Array<Object>;
 
-  canvasWidth: number;
-  canvasHeight: number;
-
   width: number;
   height: number;
+
+  unitRatio;
 
   background: string;
 
   constructor(
+    context: CanvasRenderingContext2D,
     receiver: receiver,
     emitters: Array<emitter>,
     polygons: Array<Object>,
@@ -21,24 +23,38 @@ export class Scene implements scene {
     height: number,
     background?: string
   ) {
+    this.context = context;
+
     this.receiver = receiver;
     this.emitters = emitters;
     this.polygons = polygons;
 
-    this.canvasWidth = width;
-    this.canvasHeight = height;
-
     this.width = width;
     this.height = height;
+
+    this.unitRatio =
+      this.width > this.height ? this.width / 100 : this.height / 100;
 
     this.background = background || "#FFF";
   }
 
   // Main render function
-  render(ctx: CanvasRenderingContext2D): void {
-    ctx.fillStyle = this.background;
-    ctx.fillRect(0, 0, this.width, this.height);
+  render(): void {
+    // Clear canvas with background colour
+    this.context.fillStyle = this.background;
+    this.context.fillRect(0, 0, this.width, this.height);
 
-    this.receiver.render(ctx);
+    this.receiver.render(this.context, this.unitRatio);
+  }
+
+  // Update scene units for new canvas scale
+  resize(canvasWidth: number, canvasHeight: number): void {
+    this.width = canvasWidth;
+    this.height = canvasHeight;
+
+    this.unitRatio =
+      this.width < this.height ? this.width / 100 : this.height / 100;
+
+    this.render();
   }
 }

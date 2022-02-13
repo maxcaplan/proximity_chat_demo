@@ -20,7 +20,7 @@ export interface receiver {
   strokeCol: string;
   strokeWidth: number;
 
-  render: (ctx: CanvasRenderingContext2D) => void;
+  render: (ctx: CanvasRenderingContext2D, unitRatio: number) => void;
 }
 
 export interface emitter {
@@ -28,11 +28,14 @@ export interface emitter {
 }
 
 export interface scene {
+  context: CanvasRenderingContext2D;
   receiver: receiver;
   emitters: Array<emitter>;
   polygons: Array<Object>;
   width: number;
   height: number;
+  unitRatio: number;
 
-  render: (ctx: CanvasRenderingContext2D) => void;
+  render: () => void;
+  resize: (canvasWidth: number, canvasHeight: number) => void;
 }
