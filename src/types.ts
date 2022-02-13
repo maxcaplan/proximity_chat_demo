@@ -15,7 +15,12 @@ export interface polygon {
 
 export interface receiver {
   pos: point;
-  size: number;
+  radius: number;
+  fillCol: string;
+  strokeCol: string;
+  strokeWidth: number;
+
+  render: (ctx: CanvasRenderingContext2D) => void;
 }
 
 export interface emitter {
@@ -28,4 +33,6 @@ export interface scene {
   polygons: Array<Object>;
   width: number;
   height: number;
+
+  render: (ctx: CanvasRenderingContext2D) => void;
 }
