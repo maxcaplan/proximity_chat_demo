@@ -1,11 +1,11 @@
-import { emitter, receiver, scene } from "../types";
+import { emitter, polygon, receiver, scene } from "../types";
 
 export class Scene implements scene {
   context: CanvasRenderingContext2D;
 
   receiver: receiver;
   emitters: Array<emitter>;
-  polygons: Array<Object>;
+  polygons: Array<polygon>;
 
   width: number;
   height: number;
@@ -18,7 +18,7 @@ export class Scene implements scene {
     context: CanvasRenderingContext2D,
     receiver: receiver,
     emitters: Array<emitter>,
-    polygons: Array<Object>,
+    polygons: Array<polygon>,
     width: number,
     height: number,
     background?: string
@@ -45,6 +45,10 @@ export class Scene implements scene {
     this.context.fillRect(0, 0, this.width, this.height);
 
     this.receiver.render(this.context, this.unitRatio);
+
+    this.polygons.forEach((polygon) => {
+      polygon.render(this.context, this.unitRatio, this.receiver.pos);
+    });
   }
 
   // Update scene units for new canvas scale

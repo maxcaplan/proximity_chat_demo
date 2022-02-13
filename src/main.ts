@@ -1,4 +1,5 @@
 import "normalize.css";
+import { Polygon } from "./classes/polygon";
 import { Receiver } from "./classes/receiver";
 import { Scene } from "./classes/scene";
 import "./style.css";
@@ -12,10 +13,24 @@ window.addEventListener("resize", function (e) {
   resizeCanvas(c, ctx);
 });
 
-let scene = new Scene(ctx, new Receiver(0, 0), [], [], c.width, c.height);
+let scene = new Scene(
+  ctx,
+  new Receiver(0, 0),
+  [],
+  [
+    new Polygon({ x: 0, y: 20 }, [
+      { x: 0, y: 2.5 },
+      { x: 5, y: -5 },
+      { x: -5, y: -5 },
+    ]),
+  ],
+  c.width,
+  c.height
+);
+
 resizeCanvas(c, ctx);
-scene.render();
-console.log(scene);
+
+// window.requestAnimationFrame(animate);
 
 function resizeCanvas(
   canvas: HTMLCanvasElement,
@@ -33,7 +48,14 @@ function resizeCanvas(
 
   // Scale all drawing operations by the dpr
   context.translate(c.width / 2, c.height / 2);
+  // Flip Y axis so +Y is up and -Y is down
+  context.scale(1, -1);
 
   // Update scene for new canvas
   scene.resize(canvas.width, canvas.height);
+}
+
+function animate(timestamp: number) {
+  scene.render();
+  window.requestAnimationFrame(animate);
 }

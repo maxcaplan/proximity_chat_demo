@@ -9,8 +9,18 @@ export interface line {
 }
 
 export interface polygon {
+  pos: point;
   points: Array<point>;
   lines: Array<line>;
+  fillCol: string;
+  strokeCol: string;
+  strokeWidth: number;
+
+  render: (
+    ctx: CanvasRenderingContext2D,
+    unitRatio: number,
+    offset?: point
+  ) => void;
 }
 
 export interface receiver {
@@ -31,7 +41,7 @@ export interface scene {
   context: CanvasRenderingContext2D;
   receiver: receiver;
   emitters: Array<emitter>;
-  polygons: Array<Object>;
+  polygons: Array<polygon>;
   width: number;
   height: number;
   unitRatio: number;
