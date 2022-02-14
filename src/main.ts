@@ -30,7 +30,8 @@ let scene = new Scene(
 
 resizeCanvas(c, ctx);
 
-// window.requestAnimationFrame(animate);
+let lastFrame = 0;
+window.requestAnimationFrame((timestamp) => animate(timestamp, lastFrame));
 
 function resizeCanvas(
   canvas: HTMLCanvasElement,
@@ -55,7 +56,13 @@ function resizeCanvas(
   scene.resize(canvas.width, canvas.height);
 }
 
-function animate(timestamp: number) {
+function animate(timestamp: number, lastFrame: number) {
+  // Calculate time between last frame and current frame in milliseconds
+  let deltaTime = timestamp - lastFrame;
+  lastFrame = timestamp;
+
+  scene.move(deltaTime);
+  scene.update();
   scene.render();
-  window.requestAnimationFrame(animate);
+  window.requestAnimationFrame((timestamp) => animate(timestamp, lastFrame));
 }
