@@ -46,15 +46,15 @@ export class Polygon implements polygon {
     ctx.beginPath();
 
     ctx.moveTo(
-      (this.points[0].x + this.pos.x + offset.x) * unitRatio,
-      (this.points[0].y + this.pos.y + offset.y) * unitRatio
+      (this.points[0].x + this.pos.x - offset.x) * unitRatio,
+      (this.points[0].y + this.pos.y - offset.y) * unitRatio
     );
 
     this.points.forEach((point, i) => {
       if (i != 0)
         ctx.lineTo(
-          (point.x + this.pos.x + offset.x) * unitRatio,
-          (point.y + this.pos.y + offset.y) * unitRatio
+          (point.x + this.pos.x - offset.x) * unitRatio,
+          (point.y + this.pos.y - offset.y) * unitRatio
         );
     });
 
