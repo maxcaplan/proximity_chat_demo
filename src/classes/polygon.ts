@@ -6,9 +6,9 @@ export class Polygon implements polygon {
   points;
   lines: Array<line> = [];
 
-  fillCol: string;
+  fillCol: string | undefined;
 
-  strokeCol: string;
+  strokeCol: string | undefined;
   strokeWidth: number;
 
   constructor(
@@ -33,8 +33,8 @@ export class Polygon implements polygon {
       }
     }
 
-    this.fillCol = fill || "#FFF";
-    this.strokeCol = stroke || "#000";
+    this.fillCol = fill;
+    this.strokeCol = stroke;
     this.strokeWidth = strokeWidth || 0.5;
   }
 
@@ -60,11 +60,15 @@ export class Polygon implements polygon {
 
     ctx.closePath();
 
-    ctx.strokeStyle = this.strokeCol;
-    ctx.lineWidth = this.strokeWidth * unitRatio;
-    ctx.fillStyle = this.fillCol;
+    if (this.fillCol) {
+      ctx.fillStyle = this.fillCol;
+      ctx.fill();
+    }
 
-    ctx.fill();
-    ctx.stroke();
+    if (this.strokeCol) {
+      ctx.strokeStyle = this.strokeCol;
+      ctx.lineWidth = this.strokeWidth * unitRatio;
+      ctx.stroke();
+    }
   }
 }

@@ -23,8 +23,8 @@ export interface polygon {
   pos: point;
   points: Array<point>;
   lines: Array<line>;
-  fillCol: string;
-  strokeCol: string;
+  fillCol: string | undefined;
+  strokeCol: string | undefined;
   strokeWidth: number;
 
   render: (

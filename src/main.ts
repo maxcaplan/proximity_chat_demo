@@ -13,17 +13,34 @@ window.addEventListener("resize", function (e) {
   resizeCanvas(c, ctx);
 });
 
+let triangle = new Polygon(
+  { x: 0, y: 20 },
+  [
+    { x: 0, y: 2.5 },
+    { x: 5, y: -5 },
+    { x: -5, y: -5 },
+  ],
+  "#FFF",
+  "#000"
+);
+
+let walls = new Polygon(
+  { x: 0, y: 0 },
+  [
+    { x: -75, y: 50 },
+    { x: 75, y: 50 },
+    { x: 75, y: -50 },
+    { x: -75, y: -50 },
+  ],
+  undefined,
+  "#000"
+);
+
 let scene = new Scene(
   ctx,
   new Receiver(0, 0),
   [],
-  [
-    new Polygon({ x: 0, y: 20 }, [
-      { x: 0, y: 2.5 },
-      { x: 5, y: -5 },
-      { x: -5, y: -5 },
-    ]),
-  ],
+  [walls, triangle],
   c.width,
   c.height
 );
