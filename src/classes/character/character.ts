@@ -1,7 +1,8 @@
-import { inputs, point, receiver, vector2d } from "../types";
-import { Vector2d } from "./vector2d";
+import { inputs, point, character, vector2d } from "../../types";
+import { Vector2d } from "../vector2d";
 
-export class Receiver implements receiver {
+// Main character class
+export class Character implements character {
   pos: point;
   acc: number;
   vel: vector2d;
@@ -35,6 +36,7 @@ export class Receiver implements receiver {
     this.strokeWidth = strokeWidth || 0.5;
   }
 
+  // Renders character
   render(ctx: CanvasRenderingContext2D, unitRatio: number): void {
     ctx.beginPath();
     ctx.arc(0, 0, this.radius * unitRatio, 0, 2 * Math.PI, false);
@@ -47,6 +49,7 @@ export class Receiver implements receiver {
     ctx.stroke();
   }
 
+  // update velocity vector for current input
   move(inputs: inputs, deltaTime: number) {
     let move = new Vector2d();
 
@@ -67,6 +70,7 @@ export class Receiver implements receiver {
     }
   }
 
+  // Updates receiver state for current frame
   update() {
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;

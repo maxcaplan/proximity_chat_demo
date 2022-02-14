@@ -38,6 +38,7 @@ export class Polygon implements polygon {
     this.strokeWidth = strokeWidth || 0.5;
   }
 
+  // Renders polygon
   render(
     ctx: CanvasRenderingContext2D,
     unitRatio: number,

@@ -34,7 +34,7 @@ export interface polygon {
   ) => void;
 }
 
-export interface receiver {
+export interface character {
   pos: point;
   acc: number;
   vel: vector2d;
@@ -63,7 +63,7 @@ export interface inputs {
 
 export interface scene {
   context: CanvasRenderingContext2D;
-  receiver: receiver;
+  character: character;
   emitters: Array<emitter>;
   polygons: Array<polygon>;
   width: number;

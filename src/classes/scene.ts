@@ -1,9 +1,10 @@
-import { emitter, inputs, polygon, receiver, scene } from "../types";
+import { emitter, inputs, polygon, character, scene } from "../types";
 
+// Main game scene
 export class Scene implements scene {
   context: CanvasRenderingContext2D;
 
-  receiver: receiver;
+  character: character;
   emitters: Array<emitter>;
   polygons: Array<polygon>;
 
@@ -18,7 +19,7 @@ export class Scene implements scene {
 
   constructor(
     context: CanvasRenderingContext2D,
-    receiver: receiver,
+    character: character,
     emitters: Array<emitter>,
     polygons: Array<polygon>,
     width: number,
@@ -27,7 +28,7 @@ export class Scene implements scene {
   ) {
     this.context = context;
 
-    this.receiver = receiver;
+    this.character = character;
     this.emitters = emitters;
     this.polygons = polygons;
 
@@ -50,7 +51,7 @@ export class Scene implements scene {
     this.background = background || "#EEE";
   }
 
-  // Main render function
+  // Renders entire scene
   render(): void {
     // Clear canvas with background colour
     this.context.fillStyle = this.background;
@@ -61,19 +62,23 @@ export class Scene implements scene {
       this.height
     );
 
-    this.receiver.render(this.context, this.unitRatio);
+    // Render receiver
+    this.character.render(this.context, this.unitRatio);
 
+    // Render all scene polygons
     this.polygons.forEach((polygon) => {
-      polygon.render(this.context, this.unitRatio, this.receiver.pos);
+      polygon.render(this.context, this.unitRatio, this.character.pos);
     });
   }
 
+  // Update scene for current frame
   update(): void {
-    this.receiver.update();
+    this.character.update();
   }
 
+  // Update all scene movement for current frame
   move(deltaTime: number): void {
-    this.receiver.move(this.inputs, deltaTime);
+    this.character.move(this.inputs, deltaTime);
   }
 
   // Update scene units for new canvas scale
@@ -87,6 +92,7 @@ export class Scene implements scene {
     this.render();
   }
 
+  // Update input dictionary on keyboard event
   updateInput(e: KeyboardEvent) {
     if (e.key === "ArrowUp" || e.key === "w") {
       e.preventDefault();
